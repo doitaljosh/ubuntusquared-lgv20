@@ -28,22 +28,22 @@ for i in {5..1}; do
 done
 
 # System image
-mount -t ext4 -o loop /userdata/ubuntu-rootfs.img /ubuntu-desktop
+mount -t ext4 -o loop /userdata/ubuntu-rootfs.img /ubuntusquared
 
 # Core filesystems
-mount -o bind /proc /ubuntu-desktop/proc
-mount -o bind /sys /ubuntu-desktop/sys
-mount -o bind /dev /ubuntu-desktop/dev
-mount -t devpts devpts /ubuntu-desktop/dev/pts
-mount -t tmpfs tmpfs /ubuntu-desktop/tmp
+mount -o bind /proc /ubuntusquared/proc
+mount -o bind /sys /ubuntusquared/sys
+mount -o bind /dev /ubuntusquared/dev
+mount -t devpts devpts /ubuntusquared/dev/pts
+mount -t tmpfs tmpfs /ubuntusquared/tmp
 
 # Access certain features from UT system inside chroot
-mount -o bind /run/udev /ubuntu-desktop/run/udev # Without this, keyboards, mice, and other devices won't be detected.
-mount -o bind /run/lxc /ubuntu-desktop/run/lxc
-mount -o bind /run/wpa_supplicant /ubuntu-desktop/run/wpa_supplicant
-mount -o bind /run/hybris-usb /ubuntu-desktop/run/hybris-usb
-mount -o bind /var/lib/lxc/android /ubuntu-desktop/var/lib/lxc/android # Android container files
-mount -o bind /userdata/user-data /ubuntu-desktop/home-ut # UT home folder
+mount -o bind /run/udev /ubuntusquared/run/udev # Without this, keyboards, mice, and other devices won't be detected.
+mount -o bind /run/lxc /ubuntusquared/run/lxc
+mount -o bind /run/wpa_supplicant /ubuntusquared/run/wpa_supplicant
+mount -o bind /run/hybris-usb /ubuntusquared/run/hybris-usb
+mount -o bind /var/lib/lxc/android /ubuntusquared/var/lib/lxc/android # Android container files
+mount -o bind /userdata/user-data /ubuntusquared/home-ut # UT home folder
 
 # Stop the UT GUI as it will lock the framebuffer of the external display.
 # There might be a way to free the framebuffer from UT during runtime, and
@@ -51,4 +51,4 @@ mount -o bind /userdata/user-data /ubuntu-desktop/home-ut # UT home folder
 service lightdm stop
 
 # Start the chroot and run it's init helper script.
-chroot /ubuntu-desktop /init.sh
+chroot /ubuntusquared /init.sh
