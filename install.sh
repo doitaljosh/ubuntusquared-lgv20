@@ -18,8 +18,14 @@ downloadAndExtract() {
 	| sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > /tmp/confirm-ubuntusquared.txt
 	wget --load-cookies /tmp/cookies-ubuntusquared.txt -O $filename \
 	'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(</tmp/confirm-ubuntusquared.txt)
-	echo "Extracting rootfs"
-	tar -C /userdata/ -xzpf ubuntu-rootfs.img.tar.gz
+	echo "Verifying downloaded rootfs"
+	if md5sum -c ubuntu-rootfs.img.tar.gz.md5; then
+		echo "Extracting rootfs"
+		tar -C /userdata/ -xzpf ubuntu-rootfs.img.tar.gz
+	else
+		echo "Rootfs verification failed! Try manually downloading."
+		exit 1
+	fi
 }
 
 downloadAndExtract
