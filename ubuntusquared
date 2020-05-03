@@ -19,6 +19,7 @@ else
 	echo "Detected a monitor running at "$(echo $FBMODES | sed -n 's/.*x\([^ ]*\)p*/\1/p')"FPS"
 fi
 
+sleep 3
 clear
 
 for i in {5..1}; do
