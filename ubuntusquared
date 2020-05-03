@@ -46,10 +46,11 @@ mount -o bind /run/hybris-usb /ubuntusquared/run/hybris-usb
 mount -o bind /var/lib/lxc/android /ubuntusquared/var/lib/lxc/android # Android container files
 mount -o bind /userdata/user-data /ubuntusquared/home-ut # UT home folder
 
+# Start the chroot and run it's init helper script.
+nohup sh -c 'chroot /ubuntusquared /init.sh' > /tmp/ubuntusquared.log &
+
+
 # Stop the UT GUI as it will lock the framebuffer of the external display.
 # There might be a way to free the framebuffer from UT during runtime, and
 # not have to stop UT, but for now, this is what works.
 service lightdm stop
-
-# Start the chroot and run it's init helper script.
-chroot /ubuntusquared /init.sh
